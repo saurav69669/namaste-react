@@ -1,23 +1,35 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 
-const parent = React.createElement("div", { id: "parent", key: "yo7" }, [
-  React.createElement("div", { id: "child", key: "yo0" }, [
-    React.createElement("h1", { id: "heading", key: "yo" }, "I'm an h1 tag!"),
-    React.createElement("h2", { id: "heading2", key: "yo1" }, "I'm an h2 tag!"),
-  ]),
-  React.createElement("div", { id: "child2", key: "yo6" }, [
-    React.createElement("h1", { id: "heading", key: "yo2" }, "I'm an h1 tag!"),
-    React.createElement("h2", { id: "heading2", key: "yo3" }, "I'm an h2 tag!"),
-  ]),
-]);
-
-const heading = React.createElement(
-  "h1",
-  { id: "heading", xyz: "abc" },
-  "Hello world from React!"
-);  
+// React.createElement => Object => HTMLElement(render)
+const heading = React.createElement("h1", { id: "heading" }, "Namste React!");
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
-root.render(parent);
+// JSX (transpiled before it reaches the JS engine of browser) - by parcel - Babel
+const jsxHeading = (
+  <>
+    <h1 id="heading" tabIndex={2}>
+      Namaste React Using jsx 😍
+    </h1>{" "}
+    <h2 tabIndex={1}>this is heading 2 boi!</h2>{" "}
+  </>
+);
+
+const elem = <span>Namste Elem</span>;
+
+const title = (
+  <div>
+    {elem}
+    <h2>Namaste react using JSX! 👌</h2>
+  </div>
+);
+
+// Component composition - when render component inside ither component
+const HeadingComponent = () => (
+  <div id="container">
+    <h1 className="heading">Namaste React functional component</h1>
+    {title}
+  </div>
+);
+root.render(<HeadingComponent />);
