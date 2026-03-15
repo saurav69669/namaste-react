@@ -19,7 +19,7 @@ const Body = () => {
 
     const json = await data.json();
 
-    console.log(json);
+    // console.log(json);
     setListOfRestaurants(
       json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
         ?.restaurants,
@@ -60,7 +60,8 @@ const Body = () => {
             const filteredList = listOfRestaurants.filter(
               (res) => res.info.avgRating > 4.3,
             );
-            setListOfRestaurants(filteredList);
+            console.log('btn clicked', filteredList);
+            setFilteredRestaurants(filteredList);
           }}
         >
           Top Rated Restaurant
