@@ -92,3 +92,7 @@ box-shadow: 0 0 12px 8px #8a2be263
     cursor: pointer;
     margin-left: 4px;
 }
+
+.user-card {
+    border: 1px solid grey;
+}

@@ -2,6 +2,7 @@ import resList from "../utils/mockData";
 import RestaurantCard from "./RestaurantCard";
 import { useState, useEffect } from "react";
 import Shimmer from "./Shimmer";
+import useOnlineStatus from "../utils/useOnlineStatus";
 
 const Body = () => {
   const [listOfRestaurants, setListOfRestaurants] = useState([]);
@@ -24,11 +25,20 @@ const Body = () => {
       json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
         ?.restaurants,
     );
+    console.log("response check: ", json?.data.cards[1]);
+    console.log("response check 2: ", json?.data.cards[1].card.card.gridElements.infoWithStyle.restaurants);
+
     setFilteredRestaurants(
       json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
         ?.restaurants,
     );
   };
+
+  const userOnline = useOnlineStatus();
+
+  if (!userOnline) {
+    return <h3>Looks like you are offline buddy! 😪</h3>;
+  }
 
   const handleSearch = () => {
     console.log(searhText);
@@ -60,7 +70,7 @@ const Body = () => {
             const filteredList = listOfRestaurants.filter(
               (res) => res.info.avgRating > 4.3,
             );
-            console.log('btn clicked', filteredList);
+            console.log("btn clicked", filteredList);
             setFilteredRestaurants(filteredList);
           }}
         >

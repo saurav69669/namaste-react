@@ -1,24 +1,26 @@
 import { useEffect, useState } from "react";
 import { resMenu } from "../utils/mockData";
 import Shimmer from "./Shimmer";
+import useRestaurantMenu from "../utils/useRestaurantMenu";
 
 const resInfo = () => {
-  const [resInfo, setResInfo] = useState(null);
-  useEffect(() => {
-    fetchMenu();
-  }, []);
+  // const [resInfo, setResInfo] = useState(null);
+  // useEffect(() => {
+  //   fetchMenu();
+  // }, []);
 
-  // we are using dummy data because swiggy api was not working for this
-  const fetchMenu = async () => {
-    const data = await new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(resMenu);
-      }, 500);
-    });
+  // // we are using dummy data because swiggy api was not working for this
+  // const fetchMenu = async () => {
+  //   const data = await new Promise((resolve) => {
+  //     setTimeout(() => {
+  //       resolve(resMenu);
+  //     }, 500);
+  //   });
 
-    console.log(data[0].data.cards[2].card.card.info);
-    setResInfo(data[0].data.cards[2].card.card.info);
-  };
+  //   console.log(data[0].data.cards[2].card.card.info);
+  //   setResInfo(data[0].data.cards[2].card.card.info);
+  // };
+  const resInfo = useRestaurantMenu();
 
   return resInfo ? (
     <div className="menu">
