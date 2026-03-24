@@ -26,7 +26,10 @@ const Body = () => {
         ?.restaurants,
     );
     console.log("response check: ", json?.data.cards[1]);
-    console.log("response check 2: ", json?.data.cards[1].card.card.gridElements.infoWithStyle.restaurants);
+    console.log(
+      "response check 2: ",
+      json?.data.cards[1].card.card.gridElements.infoWithStyle.restaurants,
+    );
 
     setFilteredRestaurants(
       json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
@@ -57,27 +60,31 @@ const Body = () => {
           <input
             type="text"
             value={searhText}
+            className="p-2 rounded outline-none border border-green-200"
             onChange={(e) => setSearhText(e.target.value)}
             placeholder="search your favourite restaurant"
           ></input>
-          <button className="searchBtn" onClick={handleSearch}>
+          <button
+            className="searchBtn px-4 py-2 bg-green-100 cursor-pointer m-2 rounded"
+            onClick={handleSearch}
+          >
             Search
           </button>
+          <button
+            className="filter-btn px-4 py-2 bg-pink-100 ml-2 rounded cursor-pointer"
+            onClick={() => {
+              const filteredList = listOfRestaurants.filter(
+                (res) => res.info.avgRating > 4.3,
+              );
+              console.log("btn clicked", filteredList);
+              setFilteredRestaurants(filteredList);
+            }}
+          >
+            Top Rated Restaurant
+          </button>
         </div>
-        <button
-          className="filter-btn"
-          onClick={() => {
-            const filteredList = listOfRestaurants.filter(
-              (res) => res.info.avgRating > 4.3,
-            );
-            console.log("btn clicked", filteredList);
-            setFilteredRestaurants(filteredList);
-          }}
-        >
-          Top Rated Restaurant
-        </button>
       </div>
-      <div className="res-container">
+      <div className="res-container flex flex-wrap justify-around rounded">
         {filteredRestaurants.map((restaurant) => (
           <RestaurantCard key={restaurant.info.id} resData={restaurant} />
         ))}
