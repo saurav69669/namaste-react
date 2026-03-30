@@ -1,13 +1,19 @@
 import resList from "../utils/mockData";
-import RestaurantCard from "./RestaurantCard";
-import { useState, useEffect } from "react";
+import RestaurantCard, { withPromotedLabel } from "./RestaurantCard";
+import { useState, useEffect, useContext } from "react";
 import Shimmer from "./Shimmer";
 import useOnlineStatus from "../utils/useOnlineStatus";
+// import UserContext from "../utils/UserContext";
 
 const Body = () => {
   const [listOfRestaurants, setListOfRestaurants] = useState([]);
   const [filteredRestaurants, setFilteredRestaurants] = useState([]);
   const [searhText, setSearhText] = useState("");
+
+  const PromotedLabelCard = withPromotedLabel(RestaurantCard);
+  // somehow it is not working error: "../utils/UserContext" module not found
+  // const {loggedInUser , setUserName} = useContext(UserContext);
+  
 
   useEffect(() => {
     fetchData();
@@ -25,17 +31,18 @@ const Body = () => {
       json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
         ?.restaurants,
     );
-    console.log("response check: ", json?.data.cards[1]);
-    console.log(
-      "response check 2: ",
-      json?.data.cards[1].card.card.gridElements.infoWithStyle.restaurants,
-    );
+    // console.log("response check: ", json?.data.cards[1]);
+    // console.log(
+    //   "response check 2: ",
+    //   json?.data.cards[1].card.card.gridElements.infoWithStyle.restaurants,
+    // );
 
     setFilteredRestaurants(
       json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
         ?.restaurants,
     );
   };
+  // console.log("listOfRestaurants", listOfRestaurants);
 
   const userOnline = useOnlineStatus();
 
@@ -82,12 +89,30 @@ const Body = () => {
           >
             Top Rated Restaurant
           </button>
+
+          {/* <label>UserName: </label>
+          <input
+            type="text"
+            value={loggedInUser}
+            className="p-2 rounded outline-none border border-blue-200"
+            onChange={(e) => setUserName(e.target.value)}
+            placeholder="Enter user name"
+          ></input> */}
+
         </div>
       </div>
       <div className="res-container flex flex-wrap justify-around rounded">
-        {filteredRestaurants.map((restaurant) => (
-          <RestaurantCard key={restaurant.info.id} resData={restaurant} />
-        ))}
+        {filteredRestaurants.map((restaurant) => {
+          return restaurant.info.avgRating > 4.5 ? (
+            <PromotedLabelCard resData={restaurant} key={restaurant.info.id}/>
+          ) : (
+            <RestaurantCard key={restaurant.info.id} resData={restaurant} />
+          );
+          // return (
+
+          //   <RestaurantCard key={restaurant.info.id} resData={restaurant} />
+          // )
+        })}
       </div>
     </div>
   );
