@@ -51,7 +51,7 @@ const Body = () => {
   }
 
   const handleSearch = () => {
-    console.log(searhText);
+    // console.log(searhText);
     const filteredList = listOfRestaurants.filter((res) =>
       res.info.name.toLowerCase().includes(searhText.toLowerCase()),
     );

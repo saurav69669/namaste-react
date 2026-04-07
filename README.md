@@ -49,3 +49,10 @@
  # 2 types of Routing
  - Client side routing dont call server for next page like React
  - Server side routing call server for next page to show data where pages refresh on new page navigation
+
+ # Redux Toolkit
+ - Install @reduxjs/toolkit and react-redux
+ - Build our redux store then connect our store with our app
+ - create slice for cart first
+ - dispatch (action)
+ - selector

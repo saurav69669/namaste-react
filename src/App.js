@@ -7,6 +7,9 @@ import ErrorPage from "./components/ErrorPage";
 import RestaurantMenu from "./components/RestaurantMenu";
 import { lazy, Suspense, useEffect, useState } from "react";
 import UserContext from "./utils/UserContext";
+import Cart from "./components/Cart";
+import { Provider } from "react-redux";
+import appStore from "./utils/appStore";
 
 // Chunking
 // Code splitting
@@ -29,15 +32,17 @@ const AppLayout = () => {
     setUserName(data.name);
   }, []);
   return (
-    <UserContext.Provider value={{ loggedInUser: userName, setUserName }}>
-      <div className="app">
-        <Header />
-        {/* we can provide multiple userCOntext for specific levels */}
-        {/* <UserContext.Provider value={{ loggedInUser: "Akshay" }}> */}
-        <Outlet />
-        {/* </UserContext.Provider> */}
-      </div>
-    </UserContext.Provider>
+    <Provider store={appStore}>
+      <UserContext.Provider value={{ loggedInUser: userName, setUserName }}>
+        <div className="app">
+          <Header />
+          {/* we can provide multiple userCOntext for specific levels */}
+          {/* <UserContext.Provider value={{ loggedInUser: "Akshay" }}> */}
+          <Outlet />
+          {/* </UserContext.Provider> */}
+        </div>
+      </UserContext.Provider>
+    </Provider>
   );
 };
 
@@ -55,10 +60,13 @@ const appRouter = createBrowserRouter([
         path: "about",
         element: (
           <Suspense fallback={"Loadng About page.."}>
-            {" "}
-            <About />{" "}
+            <About />
           </Suspense>
         ),
+      },
+      {
+        path: "cart",
+        element: <Cart />,
       },
       {
         path: "contact",
